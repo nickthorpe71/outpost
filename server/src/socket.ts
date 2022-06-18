@@ -24,6 +24,8 @@ function socket({ io }: { io: Server }) {
   io.on(EVENTS.connection, (socket: Socket) => {
     logger.info(`User connected ${socket.id}`);
 
+    socket.emit(EVENTS.SERVER.ROOMS, rooms);
+
     /*
      * When a user creates a new room
      */
@@ -65,6 +67,14 @@ function socket({ io }: { io: Server }) {
         });
       }
     );
+
+    /*
+     * When a user joins a room
+     */
+    socket.on(EVENTS.CLIENT.JOIN_ROOM, (roomId) => {
+      socket.join(roomId);
+      socket.emit(EVENTS.SERVER.JOINED_ROOM, roomId);
+    });
   });
 }
 

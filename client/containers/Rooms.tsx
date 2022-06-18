@@ -20,7 +20,7 @@ function RoomsContainer() {
     newRoomRef.current.value = "";
   }
 
-  function handleJoinRoom(id) {
+  function handleJoinRoom(id: string) {
     if (id === roomId) return;
 
     socket.emit(EVENTS.CLIENT.JOIN_ROOM, id);
