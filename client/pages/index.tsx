@@ -18,7 +18,8 @@ export default function Home() {
   }
 
   useEffect(() => {
-    usernameRef.current.value = localStorage.getItem("username") || "";
+    if (usernameRef)
+      usernameRef.current.value = localStorage.getItem("username") || "";
   }, []);
 
   return (
