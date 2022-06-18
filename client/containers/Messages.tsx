@@ -22,6 +22,8 @@ function MessagesContainer() {
         time: `${date.getHours()}:${date.getMinutes()}`,
       },
     ]);
+
+    newMessageRef.current.value = "";
   }
 
   if (!roomId) {
