@@ -7,7 +7,13 @@ const EVENTS = {
   CLIENT: {
     CREATE_ROOM: "CREATE_ROOM",
   },
+  SERVER: {
+    ROOMS: "ROOMS",
+    JOINED_ROOM: "JOINED_ROOM",
+  },
 };
+
+const rooms: Record<string, { name: string }> = {};
 
 function socket({ io }: { io: Server }) {
   logger.info(`Socket enabled`);
@@ -19,16 +25,23 @@ function socket({ io }: { io: Server }) {
       console.log({ roomName });
 
       // create roomId
+      const roomId = nanoid();
 
       // add a new room to the rooms object
+      rooms[roomId] = {
+        name: roomName,
+      };
 
-      // join the room(roomId)
+      socket.join(roomId);
 
       // broadcast event saying there is a new room
+      socket.broadcast.emit(EVENTS.SERVER.ROOMS, rooms);
 
       // emit back to room creator with all rooms
+      socket.emit(EVENTS.SERVER.ROOMS, rooms);
 
       // emit event back to room creator saying they have joined a room
+      socket.emit(EVENTS.SERVER.JOINED_ROOM, roomId);
     });
   });
 }
