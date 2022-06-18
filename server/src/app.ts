@@ -3,6 +3,7 @@ import {createServer} from 'http';
 import {Server} from 'socket.io';
 import cors from 'cors';
 import config from 'config';
+import logger from './utils/logger';
 
 const port = config.get<number>("port");
 const host = config.get<string>("host");
@@ -19,8 +20,8 @@ const io = new Server(httpServer, {
     },
 });
 
-app.get('/', (_, res) => res.send(`Server is up`));
+app.get('/', (_, res) => res.send(`Server is up!`));
 
 httpServer.listen(port, host, () => {
-    console.log('Server is listening');
+    logger.info('Server is listening');
 });
