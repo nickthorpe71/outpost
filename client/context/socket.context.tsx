@@ -1,21 +1,41 @@
-import { createContext, useContext, useState } from 'react';
-import io, {Socket} from 'socket.io-client';
-import { SOCKET_URL } from '../config/default';
-
+import { createContext, useContext, useState } from "react";
+import io, { Socket } from "socket.io-client";
+import { SOCKET_URL } from "../config/default";
 
 interface Context {
-    socket: Socket;
-    username?: string;
-    setUsername: Function;
+  socket: Socket;
+  username?: string;
+  setUsername: Function;
+  roomId?: string;
+  rooms: object;
 }
 
 const socket = io(SOCKET_URL);
-const SocketContext = createContext<Context>({socket, setUsername: () => false});
+const SocketContext = createContext<Context>({
+  socket,
+  setUsername: () => false,
+  rooms: {},
+});
 
-function SocketProvider (props: any) {
-    const [username, setUsername] = useState("");
-    
-    return (<SocketContext.Provider value={{socket, username, setUsername}} {...props} />)
+function SocketProvider(props: any) {
+  const [username, setUsername] = useState("");
+  const [roomId, setRoomId] = useState("");
+  const [rooms, setRooms] = useState([]);
+
+  return (
+    <SocketContext.Provider
+      value={{
+        socket,
+        username,
+        setUsername,
+        roomId,
+        setRoomId,
+        rooms,
+        setRooms,
+      }}
+      {...props}
+    />
+  );
 }
 export const useSocket = () => useContext(SocketContext);
 
