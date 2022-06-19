@@ -20,10 +20,10 @@ node_modules/
 # TypeScript cache
 *.tsbuildinfo
 
-# Optional npm cache directory
+# cache directories
 .npm
-
-# Optional eslint cache
+.vscode
+.idea
 .eslintcache
 
 # dotenv environment variable files
