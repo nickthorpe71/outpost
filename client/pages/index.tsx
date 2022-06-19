@@ -25,12 +25,13 @@ export default function Home() {
   return (
     <div>
       {!username && (
-        <div>
-          <div className={styles.usernameWrapper}>
-            <div className={styles.usernameInner}></div>
+        <div className={styles.usernameWrapper}>
+          <div className={styles.usernameInner}>
+            <input placeholder='Username' ref={usernameRef} />
+            <button className='cta' onClick={handleSetUsername}>
+              START
+            </button>
           </div>
-          <input placeholder='username' ref={usernameRef} />
-          <button onClick={handleSetUsername}>START</button>
         </div>
       )}
       {username && (
